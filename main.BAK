@@ -59,6 +59,8 @@ iaInicio:- ini_contadores, new(Dialog, dialog('Proyecto final')),
    
    send(Dialog, open).
 
+
+
 %Pregunta 1
 p1:-new(Dialog, dialog('Al terminar una tarea o actividad.')),
        new(P1,menu('¿Permance en su puesto?')),
@@ -78,14 +80,16 @@ p1:-new(Dialog, dialog('Al terminar una tarea o actividad.')),
 %-------------------------------------------
 %Análisis Pregunta1
 %-------------------------------------------
-aR1(R1):- espregunta('¿Permance en su puesto?', R1),R1 = 'nunca', cont_R3.
-aR1(R1):- espregunta('¿Permance en su puesto?', R1),R1 = 'generalmente', cont_R2.
-aR1(R1):- espregunta('¿Permance en su puesto?', R1),R1 = 'siempre', cont_R1.
+aR1(R1):- espregunta('¿Permance en su puesto?', R1),R1 = 'siempre', buena.
+aR1(R1):- espregunta('¿Permance en su puesto?', R1),R1 = 'generalmente', oscilante.
+aR1(R1):- espregunta('¿Permance en su puesto?', R1),R1 = 'nunca', baja.
 
-aR2(R1):- espregunta('¿Se levanta y distrae a las personas?', R1),R1 = 'nunca', cont_R3.
-aR2(R1):- espregunta('¿Se levanta y distrae a las personas?', R1),R1 = 'generalmente', cont_R2.
-aR2(R1):- espregunta('¿Se levanta y distrae a las personas?', R1),R1 = 'siempre', cont_R1.
+aR2(R1):- espregunta('¿Se levanta y distrae a las personas?', R1),R1 = 'siempre', baja.
+aR2(R1):- espregunta('¿Se levanta y distrae a las personas?', R1),R1 = 'generalmente', oscilante.
+aR2(R1):- espregunta('¿Se levanta y distrae a las personas?', R1),R1 = 'nunca', buena.
 %-------------------------------------------
+      
+      
       
 %Pregunta 2
 p2:-new(Dialog, dialog('Durante la realización de la tarea.')),
@@ -105,21 +109,23 @@ p2:-new(Dialog, dialog('Durante la realización de la tarea.')),
       send(Dialog,default_button,siguiente),
       send(Dialog,open).
 
+
 %------------------------------------------
 %Análisis Pregunta2
 %-------------------------------------------
-bR1(R1):- espregunta('¿Golpea con el lápiz?', R1),R1 = 'siempre', cont_R1.
-bR1(R1):- espregunta('¿Golpea con el lápiz?', R1),R1 = 'generalmente', cont_R2.
-bR1(R1):- espregunta('¿Golpea con el lápiz?', R1),R1 = 'nunca', cont_R3.
+bR1(R1):- espregunta('¿Golpea con el lápiz?', R1),R1 = 'siempre', baja.
+bR1(R1):- espregunta('¿Golpea con el lápiz?', R1),R1 = 'generalmente', oscilante.
+bR1(R1):- espregunta('¿Golpea con el lápiz?', R1),R1 = 'nunca', buena.
 
-bR2(R1):- espregunta('¿Mueve la cabeza y/o piernas?', R1),R1 = 'siempre', cont_R1.
-bR2(R1):- espregunta('¿Mueve la cabeza y/o piernas?', R1),R1 = 'generalmente', cont_R2.
-bR2(R1):- espregunta('¿Mueve la cabeza y/o piernas?', R1),R1 = 'nunca', cont_R3.
+bR2(R1):- espregunta('¿Mueve la cabeza y/o piernas?', R1),R1 = 'siempre', baja.
+bR2(R1):- espregunta('¿Mueve la cabeza y/o piernas?', R1),R1 = 'generalmente', oscilante.
+bR2(R1):- espregunta('¿Mueve la cabeza y/o piernas?', R1),R1 = 'nunca', buena.
 
-bR3(R1):- espregunta('¿Realiza otros movimientos?', R1),R1 = 'siempre', cont_R1.
-bR3(R1):- espregunta('¿Realiza otros movimientos?', R1),R1 = 'generalmente', cont_R2.
-bR3(R1):- espregunta('¿Realiza otros movimientos?', R1),R1 = 'nunca', cont_R3.
+bR3(R1):- espregunta('¿Realiza otros movimientos?', R1),R1 = 'siempre', baja.
+bR3(R1):- espregunta('¿Realiza otros movimientos?', R1),R1 = 'generalmente', oscilante.
+bR3(R1):- espregunta('¿Realiza otros movimientos?', R1),R1 = 'nunca', buena.
 %-------------------------------------------
+
 
       
 %Pregunta 3
@@ -134,68 +140,738 @@ p3:-new(Dialog, dialog('Si es interrumpido en su trabajo.')),
       send(Dialog,default_button,siguiente),
       send(Dialog,open).
       
+      
 %------------------------------------------
 %Análisis Pregunta3
 %-------------------------------------------
-cR1(R1):- espregunta('¿Le cuesta reiniciarlo?', R1),R1 = 'siempre', cont_R1.
-cR1(R1):- espregunta('¿Le cuesta reiniciarlo?', R1),R1 = 'generalmente', cont_R2.
-cR1(R1):- espregunta('¿Le cuesta reiniciarlo?', R1),R1 = 'nunca', cont_R3.
+cR1(R1):- espregunta('¿Le cuesta reiniciarlo?', R1),R1 = 'siempre', baja.
+cR1(R1):- espregunta('¿Le cuesta reiniciarlo?', R1),R1 = 'generalmente', scilante.
+cR1(R1):- espregunta('¿Le cuesta reiniciarlo?', R1),R1 = 'nunca', buena.
 %-------------------------------------------
+      
+      
       
 %Pregunta 4
-p4:-new(Dialog, dialog('Al terminar una tarea o actividad.')),
-       new(P1,menu('¿Permance en su puesto?')),
+p4:-new(Dialog, dialog('Al regreso del recreo')),
+       new(P1,menu('¿Se demora en comenzar la actividad?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
-        new(P2,menu('¿Se levanta y distrae a las personas?')),
-        send_list(P2,append,[siempre , generalmente, nunca]),
 
        send(Dialog,append(P1)),
-       send(Dialog,append,P2),
 
-      new(B,button(siguiente,and(message(@prolog,p2,P1?selection,P2?selection),message(Dialog,destroy)))),
+      new(B,button(siguiente,and(message(@prolog,p2,P1?selection), message(@prolog,p5),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
       send(Dialog,open).
 
 
 %------------------------------------------
-%Análisis Pregunta2
+%Análisis Pregunta4
 %-------------------------------------------
-dR1(R1):- espregunta('', R1),R1 = 'siempre', cont_R1.
-dR1(R1):- espregunta('', R1),R1 = 'generalmente', cont_R2.
-dR1(R1):- espregunta('', R1),R1 = 'nunca', cont_R3.
+dR1(R1):- espregunta('', R1),R1 = 'siempre', baja.
+dR1(R1):- espregunta('', R1),R1 = 'generalmente', oscilante.
+dR1(R1):- espregunta('', R1),R1 = 'nunca', buena.
+%-------------------------------------------
 
-dR2(R1):- espregunta('', R1),R1 = 'siempre', cont_R1.
-dR2(R1):- espregunta('', R1),R1 = 'generalmente', cont_R2.
-dR2(R1):- espregunta('', R1),R1 = 'nunca', cont_R3.
-%-------------------------------------------
+
       
 %Pregunta 5
-p5:-new(Dialog, dialog('Al terminar una tarea o actividad.')),
-       new(P1,menu('¿Permance en su puesto?')),
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
-        new(P2,menu('¿Se levanta y distrae a las personas?')),
-        send_list(P2,append,[siempre , generalmente, nunca]),
 
        send(Dialog,append(P1)),
-       send(Dialog,append,P2),
 
-      new(B,button(siguiente,and(message(@prolog,p2,P1?selection,P2?selection),message(Dialog,destroy)))),
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
       send(Dialog,open).
 
 
 %------------------------------------------
-%Análisis Pregunta2
+%Análisis Pregunta5
 %-------------------------------------------
-eR1(R1):- espregunta('', R1),R1 = 'siempre', cont_R1.
-eR1(R1):- espregunta('', R1),R1 = 'generalmente', cont_R2.
-eR1(R1):- espregunta('', R1),R1 = 'nunca', cont_R3.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
 
-eR2(R1):- espregunta('', R1),R1 = 'siempre', cont_R1.
-eR2(R1):- espregunta('', R1),R1 = 'generalmente', cont_R2.
-eR2(R1):- espregunta('', R1),R1 = 'nunca', cont_R3.
+%-------------------------------------------
+
+
+
+%Pregunta 6
+p6:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+% espregunta('¿Castellano?', X):-esrespuesta(X).
+% espregunta('¿Matemáticas?', X):-esrespuesta(X).
+% espregunta('¿Ciencias?', X):-esrespuesta(X).
+% espregunta('¿Arte/música?', X):-esrespuesta(X).
+% espregunta('¿Educación física?', X):-esrespuesta(X).
+
+%------------------------------------------
+%Análisis Pregunta6
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
+%-------------------------------------------
+
+
+
+%Pregunta 5
+p5:-new(Dialog, dialog('Pregunta')),
+       new(P1,menu('¿Se levanta de su puesto en forma constante?')),
+       send_list(P1,append,[siempre , generalmente, nunca]),
+
+       send(Dialog,append(P1)),
+
+      new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
+      send(Dialog,append,B),
+      send(Dialog,default_button,siguiente),
+      send(Dialog,open).
+
+
+%------------------------------------------
+%Análisis Pregunta5
+%-------------------------------------------
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'siempre', baja.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'generalmente', oscilante.
+eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'nunca', buena.
+
 %-------------------------------------------
       
 ayud:- new().
@@ -225,9 +901,9 @@ ini_contadores:- sumR1('0', '0'),sumR2('0', '0'),sumR3('0', '0').
 
 
 %------------------------------
-%Respuesta 1
+%Contador de atencion buena
 %------------------------------
-cont_R1:- recorded(x, head(SumaR1)),
+buena:- recorded(x, head(SumaR1)),
           number_chars(SumaR1, Lis),
           send(SumaR1, free),
           atom_codes(Sc, Lis),
@@ -237,9 +913,9 @@ sumR1(X, X2):-atom_number(X, Xc), atom_number(X2, X2c), SumaR1 is Xc + X2c, reco
 
 
 %------------------------------
-%Respuesta 2
+%Contador de atencion osilante
 %------------------------------
-cont_R2:- recorded(y, head(SumaR2)),
+oscilante:- recorded(y, head(SumaR2)),
           number_chars(SumaR2, Lis2),
           send(SumaR2, free),
           atom_codes(Sc2, Lis2),
@@ -249,9 +925,99 @@ sumR2(Xr2, X2r2):-atom_number(Xr2, Xc), atom_number(X2r2, X2c), SumaR2 is Xc + X
 
 
 %------------------------------
-%Respuesta 3
+%Contador de atencion baja
 %------------------------------
-cont_R3:- recorded(z, head(SumaR3)),
+baja:- recorded(z, head(SumaR3)),
+          number_chars(SumaR3, Lis3),
+          send(SumaR3, free),
+          atom_codes(Sc3, Lis3),
+          sumR3(Sc3, '1').
+
+sumR3(Xr3, X2r3):-atom_number(Xr3, Xc), atom_number(X2r3, X2c), SumaR3 is Xc + X2c, recorda(z, head(SumaR3)), write('Cont R3: '), writeln(SumaR3).
+%------------------------------
+%Fin de proceso logico
+%------------------------------
+
+
+%------------------------------
+%Contador de atencion baja
+%------------------------------
+baja:- recorded(z, head(SumaR3)),
+          number_chars(SumaR3, Lis3),
+          send(SumaR3, free),
+          atom_codes(Sc3, Lis3),
+          sumR3(Sc3, '1').
+
+sumR3(Xr3, X2r3):-atom_number(Xr3, Xc), atom_number(X2r3, X2c), SumaR3 is Xc + X2c, recorda(z, head(SumaR3)), write('Cont R3: '), writeln(SumaR3).
+%------------------------------
+%Fin de proceso logico
+%------------------------------
+
+
+%------------------------------
+%Contador de atencion baja
+%------------------------------
+baja:- recorded(z, head(SumaR3)),
+          number_chars(SumaR3, Lis3),
+          send(SumaR3, free),
+          atom_codes(Sc3, Lis3),
+          sumR3(Sc3, '1').
+
+sumR3(Xr3, X2r3):-atom_number(Xr3, Xc), atom_number(X2r3, X2c), SumaR3 is Xc + X2c, recorda(z, head(SumaR3)), write('Cont R3: '), writeln(SumaR3).
+%------------------------------
+%Fin de proceso logico
+%------------------------------
+
+
+%------------------------------
+%Contador de atencion baja
+%------------------------------
+baja:- recorded(z, head(SumaR3)),
+          number_chars(SumaR3, Lis3),
+          send(SumaR3, free),
+          atom_codes(Sc3, Lis3),
+          sumR3(Sc3, '1').
+
+sumR3(Xr3, X2r3):-atom_number(Xr3, Xc), atom_number(X2r3, X2c), SumaR3 is Xc + X2c, recorda(z, head(SumaR3)), write('Cont R3: '), writeln(SumaR3).
+%------------------------------
+%Fin de proceso logico
+%------------------------------
+
+
+%------------------------------
+%Contador de atencion baja
+%------------------------------
+baja:- recorded(z, head(SumaR3)),
+          number_chars(SumaR3, Lis3),
+          send(SumaR3, free),
+          atom_codes(Sc3, Lis3),
+          sumR3(Sc3, '1').
+
+sumR3(Xr3, X2r3):-atom_number(Xr3, Xc), atom_number(X2r3, X2c), SumaR3 is Xc + X2c, recorda(z, head(SumaR3)), write('Cont R3: '), writeln(SumaR3).
+%------------------------------
+%Fin de proceso logico
+%------------------------------
+
+
+%------------------------------
+%Contador de atencion baja
+%------------------------------
+baja:- recorded(z, head(SumaR3)),
+          number_chars(SumaR3, Lis3),
+          send(SumaR3, free),
+          atom_codes(Sc3, Lis3),
+          sumR3(Sc3, '1').
+
+sumR3(Xr3, X2r3):-atom_number(Xr3, Xc), atom_number(X2r3, X2c), SumaR3 is Xc + X2c, recorda(z, head(SumaR3)), write('Cont R3: '), writeln(SumaR3).
+%------------------------------
+%Fin de proceso logico
+%------------------------------
+
+
+%------------------------------
+%Contador de atencion baja
+%------------------------------
+baja:- recorded(z, head(SumaR3)),
           number_chars(SumaR3, Lis3),
           send(SumaR3, free),
           atom_codes(Sc3, Lis3),
