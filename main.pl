@@ -59,29 +59,66 @@ espregunta('Concluir un trabajo', X):-esrespuesta(X).
 %-------------------------------------------
 %Inicio de programa
 %-------------------------------------------
-iaInicio:- ini_contadores, new(Dialog, dialog('Proyecto final')),
+iaInicio:- new(Dialog, dialog('Proyecto final')),
    send(Dialog, size, size(400, 400)),
    send(Dialog, append, new(Menu, menu_bar)),
    send(Menu, append, new(Iniciar, popup(iniciar))),
    send(Menu, append, new(Ayuda, popup(ayuda))),
-   send_list(Iniciar, append, [menu_item(iniciar, message(@prolog, p1)), menu_item(file, message(@prolog, fil))]),
+   send_list(Iniciar, append, [menu_item(iniciar, message(@prolog, data_user)),
+                               menu_item(salir, message(Dialog, destroy))]),
    send_list(Ayuda, append, [menu_item(ayuda, message(@prolog, ayud))]),
    
    send(Dialog, open).
 
 
 
+%Recuerda datos del usuario
+remember_user(N, A, S):-  recorda(name, head(N)), recorda(age, head(A)),recorda(sex, head(S)).
+
+
+
+%Cargar datos del usuario
+data_user:- new(Dialog, dialog('Datos del usuario')),
+   %Etiqueta
+    new(Etiqueta, label(nombre, 'Ingrese sus datos: ')),
+
+    %Cajas de texto
+    new(Text1, text_item('Nombre: ')),
+    new(Text2, text_item('Edad: ')),
+    new(Text3, text_item('Sexo')),
+
+    %Botones
+    new(Siguiente, button('Siguiente', and(message(@prolog, remember_user,Text1?selection,Text2?selection,Text3?selection),
+                                           message(@prolog, p1),
+                                           message(Dialog, destroy)))),
+    new(Salir, button('Salir', message(Dialog, destroy))),
+
+    send(Dialog, append, Etiqueta),
+    send(Dialog, append, Text1),
+    send(Dialog, append, Text2),
+    send(Dialog, append, Text3),
+    send(Dialog, append, Siguiente),
+    send(Dialog, append, Salir),
+
+    send(Dialog, open).
+
+
 %Pregunta 1
-p1:-new(Dialog, dialog('Al terminar una tarea o actividad.')),
+p1:-new(Dialog, dialog('Pregunta 1')),
+                ini_contadores,
+                new(E, label(nombre, 'Al terminar una tarea o actividad.')),
        new(P1,menu('¿Permance en su puesto?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
         new(P2,menu('¿Se levanta y distrae a las personas?')),
         send_list(P2,append,[siempre , generalmente, nunca]),
 
+        send(Dialog, append(E)),
        send(Dialog,append(P1)),
        send(Dialog,append,P2),
 
-      new(B,button(siguiente,and(message(@prolog,aR1,P1?selection), message(@prolog,aR2,P2?selection), message(@prolog, p2),message(Dialog,destroy)))),
+      new(B,button(siguiente,and(message(@prolog,aR1,P1?selection),
+                                 message(@prolog,aR2,P2?selection),
+                                 message(@prolog, p2),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
       send(Dialog,open).
@@ -102,7 +139,8 @@ aR2(R1):- espregunta('¿Se levanta y distrae a las personas?', R1),R1 = 'nunca', 
       
       
 %Pregunta 2
-p2:-new(Dialog, dialog('Durante la realización de la tarea.')),
+p2:-new(Dialog, dialog('Pregunta 2')),
+                new(E, label(nombre, 'Durante la realización de la tarea.')),
        new(P1,menu('¿Golpea con el lápiz?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
        new(P2,menu('¿Mueve la cabeza y/o piernas?')),
@@ -110,6 +148,7 @@ p2:-new(Dialog, dialog('Durante la realización de la tarea.')),
        new(P3,menu('¿Realiza otros movimientos?')),
        send_list(P3,append,[siempre , generalmente, nunca]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
        send(Dialog,append,P2),
        send(Dialog,append,P3),
@@ -139,10 +178,12 @@ bR3(R1):- espregunta('¿Realiza otros movimientos?', R1),R1 = 'nunca', buena.
 
       
 %Pregunta 3
-p3:-new(Dialog, dialog('Si es interrumpido en su trabajo.')),
-       new(P1,menu('¿Le cuesta reiniciarlo?')),
-       send_list(P1,append,[siempre , generalmente, nunca]),
+p3:-new(Dialog, dialog('Pregunta 3')),
+                new(E, label(nombre, 'Si es interrumpido en su trabajo.')),
+                new(P1,menu('¿Le cuesta reiniciarlo?')),
+                send_list(P1,append,[siempre , generalmente, nunca]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
 
       new(B,button(siguiente,and(message(@prolog,cR1,P1?selection), message(@prolog, p4),message(Dialog,destroy)))),
@@ -155,17 +196,19 @@ p3:-new(Dialog, dialog('Si es interrumpido en su trabajo.')),
 %Análisis Pregunta3
 %-------------------------------------------
 cR1(R1):- espregunta('¿Le cuesta reiniciarlo?', R1),R1 = 'siempre', baja.
-cR1(R1):- espregunta('¿Le cuesta reiniciarlo?', R1),R1 = 'generalmente', scilante.
+cR1(R1):- espregunta('¿Le cuesta reiniciarlo?', R1),R1 = 'generalmente', oscilante.
 cR1(R1):- espregunta('¿Le cuesta reiniciarlo?', R1),R1 = 'nunca', buena.
 %-------------------------------------------
       
       
       
 %Pregunta 4
-p4:-new(Dialog, dialog('Al regreso del recreo')),
+p4:-new(Dialog, dialog('Pregunta 4')),
+                new(E, label(nombre, 'Al regreso del recreo')),
        new(P1,menu('¿Se demora en comenzar la actividad?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
 
       new(B,button(siguiente,and(message(@prolog,dR1,P1?selection), message(@prolog,p5),message(Dialog,destroy)))),
@@ -185,10 +228,12 @@ dR1(R1):- espregunta('¿Se demora en comenzar la actividad?', R1),R1 = 'nunca', b
 
       
 %Pregunta 5
-p5:-new(Dialog, dialog('Pregunta')),
+p5:-new(Dialog, dialog('Pregunta 5')),
+       new(E, label(nombre, 'Durante algúna actividad.')),
        new(P1,menu('¿Se levanta de su puesto en forma constante?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
 
       new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
@@ -209,7 +254,8 @@ eR1(R1):- espregunta('¿Se levanta de su puesto en forma constante?', R1),R1 = 'n
 
 
 %Pregunta 6
-p6:-new(Dialog, dialog('Participa activamente en las clases de:')),
+p6:-new(Dialog, dialog('Pregunta 6')),
+       new(E, label(nombre, 'Participa activamente en las clases de:')),
        new(P1,menu('Castellano')),
        send_list(P1,append,[si , no]),
        new(P2,menu('Matemáticas')),
@@ -221,6 +267,7 @@ p6:-new(Dialog, dialog('Participa activamente en las clases de:')),
        new(P5,menu('Educación física')),
        send_list(P5,append,[si , no]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
        send(Dialog,append(P2)),
        send(Dialog,append(P3)),
@@ -260,10 +307,12 @@ fR5(R1):- espregunta('¿Educación física?', R1),R1 = 'no',ignora.
 
 
 %Pregunta 8
-p8:-new(Dialog, dialog('Sus preguntas o participaciones en clases')),
+p8:-new(Dialog, dialog('Pregunta 7.')),
+       new(E, label(nombre, 'Sus preguntas o participaciones en clases.')),
        new(P1,menu('¿Son siempre relacionada con lo tratado?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
 
       new(B,button(siguiente,and(message(@prolog,gR1,P1?selection), message(@prolog, p9),message(Dialog,destroy)))),
@@ -284,10 +333,12 @@ gR1(R1):- espregunta('¿Son siempre relacionada con lo tratado?', R1),R1 = 'nunca
 
 
 %Pregunta 9
-p9:-new(Dialog, dialog('Constantemente')),
+p9:-new(Dialog, dialog('Pregunta 8')),
+       new(E, label(nombre, 'Constantemente.')),
        new(P1,menu('¿Solicita que le repitan las instrucciones?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
 
       new(B,button(siguiente,and(message(@prolog,hR1,P1?selection), message(@prolog, p10),message(Dialog,destroy)))),
@@ -308,10 +359,12 @@ hR1(R1):- espregunta('¿Solicita que le repitan las instrucciones?', R1),R1 = 'nu
 
 
 %Pregunta 10
-p10:-new(Dialog, dialog('Pregunta')),
+p10:-new(Dialog, dialog('Pregunta 9')),
+       new(E, label(nombre, 'Durante algúna actividad.')),
        new(P1,menu('¿Parece no comprender las instrucciones dadas?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
 
       new(B,button(siguiente,and(message(@prolog,iR1,P1?selection), message(@prolog, p11),message(Dialog,destroy)))),
@@ -333,7 +386,8 @@ iR1(R1):- espregunta('¿Parece no comprender las instrucciones dadas?', R1),R1 = 
 
 
 %Pregunta 11
-p11:-new(Dialog, dialog('¿Realiza sus actividades sistemáticamente sin distraerse en clases de:?')),
+p11:-new(Dialog, dialog('Pregunta 10')),
+       new(E, label(nombre, 'Realiza sus actividades sistemáticamente sin distraerse en clases de:')),
        new(P1,menu('Castellano')),
        send_list(P1,append,[si , no]),
        new(P2,menu('Matemáticas')),
@@ -345,6 +399,7 @@ p11:-new(Dialog, dialog('¿Realiza sus actividades sistemáticamente sin distraers
        new(P5,menu('Educación física')),
        send_list(P5,append,[si , no]),
 
+       send(Dialog,append(E)),
        send(Dialog,append(P1)),
        send(Dialog,append(P2)),
        send(Dialog,append(P3)),
@@ -385,10 +440,12 @@ jR5(R1):- espregunta('¿Educación física?', R1),R1 = 'no',ignora.
 
 
 %Pregunta 12
-p12:-new(Dialog, dialog('Pregunta')),
+p12:-new(Dialog, dialog('Pregunta 11')),
+       new(E, label(nombre, 'Usted diría que:')),
        new(P1,menu('¿Termina las actividades en el tiempo establecido?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
 
       new(B,button(siguiente,and(message(@prolog,kR1,P1?selection), message(@prolog, p13),message(Dialog,destroy)))),
@@ -409,10 +466,12 @@ kR1(R1):- espregunta('¿Termina las actividades en el tiempo establecido?', R1),R
 
 
 %Pregunta 13
-p13:-new(Dialog, dialog('Pregunta')),
+p13:-new(Dialog, dialog('Pregunta 12')),
+       new(E, label(nombre, 'Durante la clase:')),
        new(P1,menu('¿Mira al profesor mientras éste habla?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
 
       new(B,button(siguiente,and(message(@prolog,lR1,P1?selection),
@@ -435,10 +494,12 @@ lR1(R1):- espregunta('¿Mira al profesor mientras éste habla?', R1),R1 = 'nunca',
 
 
 %Pregunta 14
-p14:-new(Dialog, dialog('Pregunta')),
+p14:-new(Dialog, dialog('Pregunta 13')),
+       new(E, label(nombre, 'Usted diría que:')),
        new(P1,menu('¿Se demora en iniciar las actividades dadas?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
 
       new(B,button(siguiente,and(message(@prolog,mR1,P1?selection), message(@prolog, p19),message(Dialog,destroy)))),
@@ -459,10 +520,12 @@ mR1(R1):- espregunta('¿Se demora en iniciar las actividades dadas?', R1),R1 = 'n
 
 
 %Pregunta 19
-p19:-new(Dialog, dialog('Pregunta')),
+p19:-new(Dialog, dialog('Pregunta 14')),
+       new(E, label(nombre, 'Durante la clase:')),
        new(P1,menu('¿Se fatiga?')),
        send_list(P1,append,[siempre , generalmente, nunca]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
 
       new(B,button(siguiente,and(message(@prolog,nR1,P1?selection), message(@prolog, p21),message(Dialog,destroy)))),
@@ -482,15 +545,21 @@ nR1(R1):- espregunta('¿Se fatiga?', R1),R1 = 'nunca', buena.
 
 
 %Pregunta 21
-p21:-new(Dialog, dialog('¿Requiere de constantes estímulos para?')),
+p21:-new(Dialog, dialog('15')),
+       new(E, label(nombre, 'Usted diría que requiere de constantes estímulos para:')),
        new(P1,menu('Iniciar un trabajo')),
        send_list(P1,append,[siempre , generalmente, nunca]),
        new(P2,menu('Concluir un trabajo')),
        send_list(P2,append,[siempre , generalmente, nunca]),
 
+       send(Dialog, append(E)),
        send(Dialog,append(P1)),
 
-      new(B,button(siguiente,and(message(@prolog,oR1,P1?selection), message(@prolog,oR2,P2?selection), message(@prolog, resultados),message(Dialog,destroy)))),
+      new(B,button(siguiente,and(message(@prolog,oR1,P1?selection),
+                                 message(@prolog,oR2,P2?selection),
+                                 message(@prolog, resultados),
+                                 message(Dialog,destroy)))),
+                                 
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
       send(Dialog,open).
@@ -628,12 +697,15 @@ sumfs(XEf, X2Ef):-atom_number(XEf, Xc), atom_number(X2Ef, X2c), SumaEf is Xc + X
 %------------------------------
 %Resultados
 %------------------------------
-resultados:- recorded(x, head(SumaR1)),
-             writeln('Atención alta: '), writeln(SumaR1),
-             recorded(y, head(SumaR2)),
-             write('Atención oscilante: '), writeln(SumaR2),
-             recorded(z, head(SumaR3)),
-             write('Atención bajo: '), writeln(SumaR3),
+resultados:- writeln('Resultados del usuario: '),recorded(name, head(N)), write(N),
+             writeln('Edad de: '),recorded(age, head(A)), write(A),
+             writeln('Sexualidad: '),recorded(sex, head(S)), write(S),
+             recorded(x, head(SumaR1)), T1 is SumaR1 * 6.6,
+             writeln('Porsentaje de atención alta: '), writeln(T1), write('%'),
+             recorded(y, head(SumaR2)),T2 is SumaR2 * 6.6,
+             writeln('Porsentaje de atención oscilante: '), writeln(T2), write('%'),
+             recorded(z, head(SumaR3)), T3 is SumaR3 * 6.6,
+             writeln('Porsentaje de atención baja: '), writeln(T3), write('%'),
              recorded(cas, head(SumaCas)),
              write('Atención Cas: '), writeln(SumaCas),
              recorded(mat, head(SumaMat)),
