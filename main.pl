@@ -60,7 +60,7 @@ espregunta('Concluir un trabajo', X):-esrespuesta(X).
 %Inicio de programa
 %-------------------------------------------
 iaInicio:- new(Dialog, dialog('Proyecto final')),
-   send(Dialog, size, size(400, 400)),
+   send(Dialog, size, size(600, 400)),
    send(Dialog, append, new(Menu, menu_bar)),
    send(Menu, append, new(Iniciar, popup(iniciar))),
    send(Menu, append, new(Ayuda, popup(ayuda))),
@@ -68,34 +68,8 @@ iaInicio:- new(Dialog, dialog('Proyecto final')),
                                menu_item(salir, message(Dialog, destroy))]),
    send_list(Ayuda, append, [menu_item(ayuda, message(@prolog, ayud))]),
    
-   send(Dialog, open).
+   send(Dialog, open, point(400, 200)).
 
-
-
-%Cargar datos del usuario
-% data_user:- new(Dialog, dialog('Datos del usuario')),
-%    %Etiqueta
-%     new(Etiqueta, label(nombre, 'Ingrese sus datos: ')),
-% 
-%     %Cajas de texto
-%     new(Text1, text_item('Nombre: ')),
-%     new(Text2, text_item('Edad: ')),
-%     new(Text3, text_item('Sexo')),
-% 
-%     %Botones
-%     new(Siguiente, button('Siguiente', and(message(@prolog, remember_user,Text1?selection,Text2?selection,Text3?selection),
-%                                            message(@prolog, p1),
-%                                            message(Dialog, destroy)))),
-%     new(Salir, button('Salir', message(Dialog, destroy))),
-% 
-%     send(Dialog, append, Etiqueta),
-%     send(Dialog, append, Text1),
-%     send(Dialog, append, Text2),
-%     send(Dialog, append, Text3),
-%     send(Dialog, append, Siguiente),
-%     send(Dialog, append, Salir),
-% 
-%     send(Dialog, open).
 
 
 %Pregunta 1
@@ -116,7 +90,7 @@ p1:-new(Dialog, dialog('Pregunta 1')),
                                  message(@prolog, p2),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
       
 
 %-------------------------------------------
@@ -151,8 +125,7 @@ p2:-new(Dialog, dialog('Pregunta 2')),
       new(B,button(siguiente,and(message(@prolog,bR1,P1?selection), message(@prolog,bR2,P2?selection), message(@prolog,bR3,P3?selection), message(@prolog, p3),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
-
+      send(Dialog, open, point(420, 220)).
 
 %------------------------------------------
 %Análisis Pregunta2
@@ -184,7 +157,7 @@ p3:-new(Dialog, dialog('Pregunta 3')),
       new(B,button(siguiente,and(message(@prolog,cR1,P1?selection), message(@prolog, p4),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
       
       
 %------------------------------------------
@@ -209,7 +182,7 @@ p4:-new(Dialog, dialog('Pregunta 4')),
       new(B,button(siguiente,and(message(@prolog,dR1,P1?selection), message(@prolog,p5),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -234,7 +207,7 @@ p5:-new(Dialog, dialog('Pregunta 5')),
       new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -277,7 +250,7 @@ p6:-new(Dialog, dialog('Pregunta 6')),
                                   message(@prolog, p8),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -313,7 +286,7 @@ p8:-new(Dialog, dialog('Pregunta 7.')),
       new(B,button(siguiente,and(message(@prolog,gR1,P1?selection), message(@prolog, p9),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -339,7 +312,7 @@ p9:-new(Dialog, dialog('Pregunta 8')),
       new(B,button(siguiente,and(message(@prolog,hR1,P1?selection), message(@prolog, p10),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -366,7 +339,7 @@ p10:-new(Dialog, dialog('Pregunta 9')),
       %new(B,button(siguiente,and(message(@prolog,iR1,P1?selection), message(@prolog, resultados),message(Dialog,destroy)))), ----------------> con resultados salgo
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %-------------------------------------------
@@ -409,7 +382,7 @@ p11:-new(Dialog, dialog('Pregunta 10')),
                                   message(@prolog, p12),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -446,7 +419,7 @@ p12:-new(Dialog, dialog('Pregunta 11')),
       new(B,button(siguiente,and(message(@prolog,kR1,P1?selection), message(@prolog, p13),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -474,7 +447,7 @@ p13:-new(Dialog, dialog('Pregunta 12')),
                                   message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -500,7 +473,7 @@ p14:-new(Dialog, dialog('Pregunta 13')),
       new(B,button(siguiente,and(message(@prolog,mR1,P1?selection), message(@prolog, p19),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -526,7 +499,7 @@ p19:-new(Dialog, dialog('Pregunta 14')),
       new(B,button(siguiente,and(message(@prolog,nR1,P1?selection), message(@prolog, p21),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 %------------------------------------------
 %Análisis Pregunta19
@@ -557,7 +530,7 @@ p21:-new(Dialog, dialog('15')),
                                  
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -725,7 +698,7 @@ data_user:- new(Dialog, dialog('Ingreso de datos')),
     send(Dialog, append, Siguiente),
     send(Dialog, append, Salir),
 
-    send(Dialog, open).
+    send(Dialog, open, point(420, 220)).
 
 
 resultados:- new(Dialog, dialog('Resultados del "Test"')),
@@ -816,7 +789,7 @@ resultados:- new(Dialog, dialog('Resultados del "Test"')),
              
              send(Dialog, append, Salir),
 
-             send(Dialog, open).
+             send(Dialog, open, point(420, 220)).
              
              
              
