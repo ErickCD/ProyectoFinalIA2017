@@ -72,35 +72,30 @@ iaInicio:- new(Dialog, dialog('Proyecto final')),
 
 
 
-%Recuerda datos del usuario
-remember_user(N, A, S):-  recorda(name, head(N)), recorda(age, head(A)),recorda(sex, head(S)).
-
-
-
 %Cargar datos del usuario
-data_user:- new(Dialog, dialog('Datos del usuario')),
-   %Etiqueta
-    new(Etiqueta, label(nombre, 'Ingrese sus datos: ')),
-
-    %Cajas de texto
-    new(Text1, text_item('Nombre: ')),
-    new(Text2, text_item('Edad: ')),
-    new(Text3, text_item('Sexo')),
-
-    %Botones
-    new(Siguiente, button('Siguiente', and(message(@prolog, remember_user,Text1?selection,Text2?selection,Text3?selection),
-                                           message(@prolog, p1),
-                                           message(Dialog, destroy)))),
-    new(Salir, button('Salir', message(Dialog, destroy))),
-
-    send(Dialog, append, Etiqueta),
-    send(Dialog, append, Text1),
-    send(Dialog, append, Text2),
-    send(Dialog, append, Text3),
-    send(Dialog, append, Siguiente),
-    send(Dialog, append, Salir),
-
-    send(Dialog, open).
+% data_user:- new(Dialog, dialog('Datos del usuario')),
+%    %Etiqueta
+%     new(Etiqueta, label(nombre, 'Ingrese sus datos: ')),
+% 
+%     %Cajas de texto
+%     new(Text1, text_item('Nombre: ')),
+%     new(Text2, text_item('Edad: ')),
+%     new(Text3, text_item('Sexo')),
+% 
+%     %Botones
+%     new(Siguiente, button('Siguiente', and(message(@prolog, remember_user,Text1?selection,Text2?selection,Text3?selection),
+%                                            message(@prolog, p1),
+%                                            message(Dialog, destroy)))),
+%     new(Salir, button('Salir', message(Dialog, destroy))),
+% 
+%     send(Dialog, append, Etiqueta),
+%     send(Dialog, append, Text1),
+%     send(Dialog, append, Text2),
+%     send(Dialog, append, Text3),
+%     send(Dialog, append, Siguiente),
+%     send(Dialog, append, Salir),
+% 
+%     send(Dialog, open).
 
 
 %Pregunta 1
@@ -694,29 +689,170 @@ sumfs(XEf, X2Ef):-atom_number(XEf, Xc), atom_number(X2Ef, X2c), SumaEf is Xc + X
 %------------------------------
 
 
+
 %------------------------------
-%Resultados
+%Recuerda datos del usuario
 %------------------------------
-resultados:- writeln('Resultados del usuario: '),recorded(name, head(N)), write(N),
-             writeln('Edad de: '),recorded(age, head(A)), write(A),
-             writeln('Sexualidad: '),recorded(sex, head(S)), write(S),
+remember_user(N, A, S):-  recorda(name, head(N)), recorda(age, head(A)),recorda(sex, head(S)).
+%------------------------------
+
+
+
+%------------------------------
+%Resultados de las preguntas
+%------------------------------
+
+%Cargar datos del usuario
+data_user:- new(Dialog, dialog('Ingreso de datos')),
+   %Etiqueta
+    new(Etiqueta, label(nombre, 'Ingrese sus datos: ')),
+
+    %Cajas de texto
+    new(Text1, text_item('Nombre: ')),
+    new(Text2, text_item('Edad: ')),
+    new(Text3, text_item('Sexo')),
+
+    %Botones
+    new(Siguiente, button('Siguiente', and(message(@prolog, remember_user,Text1?selection,Text2?selection,Text3?selection),
+                                           message(@prolog, p1),
+                                           message(Dialog, destroy)))),
+    new(Salir, button('Salir', message(Dialog, destroy))),
+
+    send(Dialog, append, Etiqueta),
+    send(Dialog, append, Text1),
+    send(Dialog, append, Text2),
+    send(Dialog, append, Text3),
+    send(Dialog, append, Siguiente),
+    send(Dialog, append, Salir),
+
+    send(Dialog, open).
+
+
+resultados:- new(Dialog, dialog('Resultados del "Test"')),
+
+%Nombre del usuario---------------------------------------------
+             recorded(name, head(N)),
+             atom_concat('Resultados del usuario: ', N, Name),
+
+%Edad del usuario-----------------------------------------------
+             recorded(age, head(A)),
+             atom_concat('Edad de: ', A, Age),
+             
+%Sexo del usuario---..------------------------------------------
+             recorded(sex, head(S)),
+             atom_concat('Sexo: ', S, Sex),
+
+%Atencion alta--------------------------------------------------
              recorded(x, head(SumaR1)), T1 is SumaR1 * 6.6,
-             writeln('Porsentaje de atención alta: '), writeln(T1), write('%'),
+             atom_concat('Porsentaje de atención alta: ', T1, Ta1),
+             atom_concat(Ta1, '%', Tp1),                            %<--------------------- atención alta
+
+%Atencion oscilante---------------------------------------------
              recorded(y, head(SumaR2)),T2 is SumaR2 * 6.6,
-             writeln('Porsentaje de atención oscilante: '), writeln(T2), write('%'),
+             atom_concat('Porsentaje de atención oscilante: ', T2, Tb1),
+             atom_concat(Tb1, '%', Tp2),                            %<--------------------- atención oscilante
+             
+%Atencion baja--------------------------------------------------
              recorded(z, head(SumaR3)), T3 is SumaR3 * 6.6,
-             writeln('Porsentaje de atención baja: '), writeln(T3), write('%'),
-             recorded(cas, head(SumaCas)),
-             write('Atención Cas: '), writeln(SumaCas),
-             recorded(mat, head(SumaMat)),
-             write('Atención Mat: '), writeln(SumaMat),
-             recorded(cie, head(SumaCie)),
-             write('Atención Cie: '), writeln(SumaCie),
-             recorded(art, head(SumaArt)),
-             write('Atención Art: '), writeln(SumaArt),
-             recorded(fis, head(SumaEf)),
-             write('Atención Ef: '), writeln(SumaEf).
-%------------------------------
+             atom_concat('Porsentaje de atención baja: ', T3, Tc1),
+             atom_concat(Tc1, '%', Tp3),                            %<--------------------- atención baja
+             
+%Atencion Castellano--------------------------------------------------
+             recorded(cas, head(SumaCas)), T4 is SumaCas * 50,
+             atom_concat('Porsentaje de atención en castellano: ', T4, Td1),
+             atom_concat(Td1, '%', Tp4),                            %<--------------------- atención castellano
+
+%Atencion matemáticas--------------------------------------------------
+             recorded(mat, head(SumaMat)), T5 is SumaMat * 50,
+             atom_concat('Porsentaje de atención en matemáticas: ', T5, Te1),
+             atom_concat(Te1, '%', Tp5),                            %<--------------------- atención matemáticas
+             
+%Atencion Ciencias--------------------------------------------------
+             recorded(cie, head(SumaCie)), T6 is SumaCie * 50,
+             atom_concat('Porsentaje de atención en ciencias: ', T6, Tf1),
+             atom_concat(Tf1, '%', Tp6),                            %<--------------------- atención ciencias
+             
+%Atencion artes--------------------------------------------------
+             recorded(art, head(SumaArt)), T7 is SumaArt * 50,
+             atom_concat('Porsentaje de atención en artes: ', T7, Tg1),
+             atom_concat(Tg1, '%', Tp7),                            %<--------------------- atención artes
+             
+%Atencion fisica--------------------------------------------------
+             recorded(fis, head(SumaEf)), T8 is SumaEf * 50,
+             atom_concat('Porsentaje de atención en educación física: ', T8, Th1),
+             atom_concat(Th1, '%', Tp8),                            %<--------------------- atención fisica
+             
+             %Etiquetas
+             new(En, label(nombre, Name)),
+             new(Ea, label(nombre, Age)),
+             new(Es, label(nombre, Sex)),
+             
+             new(Eaa, label(nombre, Tp1)),
+             new(Eao, label(nombre, Tp2)),
+             new(Eab, label(nombre, Tp3)),
+             
+             new(ECas, label(nombre, Tp4)),
+             new(EMat, label(nombre, Tp5)),
+             new(ECie, label(nombre, Tp6)),
+             new(EArt, label(nombre, Tp7)),
+             new(EFis, label(nombre, Tp8)),
+             
+             %Botones
+             new(Salir, button('Ok', message(Dialog, destroy))),
+             
+             send(Dialog, append, En),
+             send(Dialog, append, Ea),
+             send(Dialog, append, Es),
+             
+             send(Dialog, append, Eaa),
+             send(Dialog, append, Eao),
+             send(Dialog, append, Eab),
+             
+             send(Dialog, append, ECas),
+             send(Dialog, append, EMat),
+             send(Dialog, append, ECie),
+             send(Dialog, append, EArt),
+             send(Dialog, append, EFis),
+             
+             send(Dialog, append, Salir),
+
+             send(Dialog, open).
+             
+             
+             
+%---------------------------------------------------------------------------------------
+%Vista principal de los resultados, que lo imprime en pantalla
+%---------------------------------------------------------------------------------------
+%              writeln('Resultados del usuario: '),recorded(name, head(N)), write(N),
+
+%              writeln('Edad de: '),recorded(age, head(A)), write(A),
+
+%              writeln('Sexualidad: '),recorded(sex, head(S)), write(S),
+
+%              recorded(x, head(SumaR1)), T1 is SumaR1 * 6.6,
+%              writeln('Porsentaje de atención alta: '), writeln(T1), write('%'),
+
+%              recorded(y, head(SumaR2)),T2 is SumaR2 * 6.6,
+%              writeln('Porsentaje de atención oscilante: '), writeln(T2), write('%'),
+
+%              recorded(z, head(SumaR3)), T3 is SumaR3 * 6.6,
+%              writeln('Porsentaje de atención baja: '), writeln(T3), write('%'),
+
+%              recorded(cas, head(SumaCas)),
+%              write('Atención Cas: '), writeln(SumaCas),
+
+%              recorded(mat, head(SumaMat)),
+%              write('Atención Mat: '), writeln(SumaMat),
+
+%              recorded(cie, head(SumaCie)),
+%              write('Atención Cie: '), writeln(SumaCie),
+
+%              recorded(art, head(SumaArt)),
+%              write('Atención Art: '), writeln(SumaArt),
+
+%              recorded(fis, head(SumaEf)),
+%              write('Atención Ef: '), writeln(SumaEf).
+%---------------------------------------------------------------------------------------
 
 
 %------------------------------
