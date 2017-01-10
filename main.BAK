@@ -60,47 +60,44 @@ espregunta('Concluir un trabajo', X):-esrespuesta(X).
 %Inicio de programa
 %-------------------------------------------
 iaInicio:- new(Dialog, dialog('Proyecto final')),
-   send(Dialog, size, size(400, 400)),
+   send(Dialog, size, size(600, 400)),
    send(Dialog, append, new(Menu, menu_bar)),
    send(Menu, append, new(Iniciar, popup(iniciar))),
    send(Menu, append, new(Ayuda, popup(ayuda))),
-   send_list(Iniciar, append, [menu_item(iniciar, message(@prolog, data_user)),
-                               menu_item(salir, message(Dialog, destroy))]),
-   send_list(Ayuda, append, [menu_item(ayuda, message(@prolog, ayud))]),
    
-   send(Dialog, open).
+   send_list(Iniciar, append, [menu_item(iniciar, message(@prolog, data_user)),
+                               menu_item(informacion, message(@prolog, info)),
+                               menu_item(salir, message(Dialog, destroy))]),
+   send_list(Ayuda, append, [menu_item(autor, message(@display, inform, 'Erick Clair'))]),
+   
+   mostrar('F:/Documentos/ITSTA/7.-septimo_semestre/ITSTA-Inteligencia_Artificial/Prolog/ProyectofinalIA/img1.jpeg',Dialog,Menu),
+   
+   send(Dialog, open, point(400, 200)).
+   
+mostrar(V,D,M):- new(I, image(V)),
+        new(B, bitmap(I)),
+        new(F2, figure),
+        send(F2, display, B),
+        new(D1, device),
+        send(D1, display, F2),
+        send(D, display, D1),
+        send(D1,below(M)).
 
+info:-new(Dialog, dialog('Pregunta 1')),
+                  new(A, label(nombre, 'Codigo fuente en: https://github.com/ErickCD/ProyectoFinalIA2017/blob/master/main.pl')),
+                  new(B, label(nombre, 'Facultad de: Ingeniería en sistemas')),
+                  new(C, label(nombre, 'Institución: Instituto Tecnológico Superior de Tantoyuca')),
+                  
+                  new(Ok,button(ok,message(Dialog,destroy))),
 
+                  send(Dialog, append(A)),
+                  send(Dialog, append(B)),
+                  send(Dialog, append(C)),
+                  send(Dialog, append(Ok)),
+                  
+      send(Dialog,default_button,ok),
+      send(Dialog, open, point(420, 220)).
 
-%Recuerda datos del usuario
-remember_user(N, A, S):-  recorda(name, head(N)), recorda(age, head(A)),recorda(sex, head(S)).
-
-
-
-%Cargar datos del usuario
-data_user:- new(Dialog, dialog('Datos del usuario')),
-   %Etiqueta
-    new(Etiqueta, label(nombre, 'Ingrese sus datos: ')),
-
-    %Cajas de texto
-    new(Text1, text_item('Nombre: ')),
-    new(Text2, text_item('Edad: ')),
-    new(Text3, text_item('Sexo')),
-
-    %Botones
-    new(Siguiente, button('Siguiente', and(message(@prolog, remember_user,Text1?selection,Text2?selection,Text3?selection),
-                                           message(@prolog, p1),
-                                           message(Dialog, destroy)))),
-    new(Salir, button('Salir', message(Dialog, destroy))),
-
-    send(Dialog, append, Etiqueta),
-    send(Dialog, append, Text1),
-    send(Dialog, append, Text2),
-    send(Dialog, append, Text3),
-    send(Dialog, append, Siguiente),
-    send(Dialog, append, Salir),
-
-    send(Dialog, open).
 
 
 %Pregunta 1
@@ -121,7 +118,7 @@ p1:-new(Dialog, dialog('Pregunta 1')),
                                  message(@prolog, p2),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
       
 
 %-------------------------------------------
@@ -156,8 +153,7 @@ p2:-new(Dialog, dialog('Pregunta 2')),
       new(B,button(siguiente,and(message(@prolog,bR1,P1?selection), message(@prolog,bR2,P2?selection), message(@prolog,bR3,P3?selection), message(@prolog, p3),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
-
+      send(Dialog, open, point(420, 220)).
 
 %------------------------------------------
 %Análisis Pregunta2
@@ -189,7 +185,7 @@ p3:-new(Dialog, dialog('Pregunta 3')),
       new(B,button(siguiente,and(message(@prolog,cR1,P1?selection), message(@prolog, p4),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
       
       
 %------------------------------------------
@@ -214,7 +210,7 @@ p4:-new(Dialog, dialog('Pregunta 4')),
       new(B,button(siguiente,and(message(@prolog,dR1,P1?selection), message(@prolog,p5),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -239,7 +235,7 @@ p5:-new(Dialog, dialog('Pregunta 5')),
       new(B,button(siguiente,and(message(@prolog,eR1,P1?selection), message(@prolog, p6),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -282,7 +278,7 @@ p6:-new(Dialog, dialog('Pregunta 6')),
                                   message(@prolog, p8),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -318,7 +314,7 @@ p8:-new(Dialog, dialog('Pregunta 7.')),
       new(B,button(siguiente,and(message(@prolog,gR1,P1?selection), message(@prolog, p9),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -344,7 +340,7 @@ p9:-new(Dialog, dialog('Pregunta 8')),
       new(B,button(siguiente,and(message(@prolog,hR1,P1?selection), message(@prolog, p10),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -371,7 +367,7 @@ p10:-new(Dialog, dialog('Pregunta 9')),
       %new(B,button(siguiente,and(message(@prolog,iR1,P1?selection), message(@prolog, resultados),message(Dialog,destroy)))), ----------------> con resultados salgo
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %-------------------------------------------
@@ -414,7 +410,7 @@ p11:-new(Dialog, dialog('Pregunta 10')),
                                   message(@prolog, p12),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -451,7 +447,7 @@ p12:-new(Dialog, dialog('Pregunta 11')),
       new(B,button(siguiente,and(message(@prolog,kR1,P1?selection), message(@prolog, p13),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -479,7 +475,7 @@ p13:-new(Dialog, dialog('Pregunta 12')),
                                   message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -505,7 +501,7 @@ p14:-new(Dialog, dialog('Pregunta 13')),
       new(B,button(siguiente,and(message(@prolog,mR1,P1?selection), message(@prolog, p19),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -531,7 +527,7 @@ p19:-new(Dialog, dialog('Pregunta 14')),
       new(B,button(siguiente,and(message(@prolog,nR1,P1?selection), message(@prolog, p21),message(Dialog,destroy)))),
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 %------------------------------------------
 %Análisis Pregunta19
@@ -562,7 +558,7 @@ p21:-new(Dialog, dialog('15')),
                                  
       send(Dialog,append,B),
       send(Dialog,default_button,siguiente),
-      send(Dialog,open).
+      send(Dialog, open, point(420, 220)).
 
 
 %------------------------------------------
@@ -694,29 +690,181 @@ sumfs(XEf, X2Ef):-atom_number(XEf, Xc), atom_number(X2Ef, X2c), SumaEf is Xc + X
 %------------------------------
 
 
+
 %------------------------------
-%Resultados
+%Recuerda datos del usuario
 %------------------------------
-resultados:- writeln('Resultados del usuario: '),recorded(name, head(N)), write(N),
-             writeln('Edad de: '),recorded(age, head(A)), write(A),
-             writeln('Sexualidad: '),recorded(sex, head(S)), write(S),
+remember_user(N, A, S):-  recorda(name, head(N)), recorda(age, head(A)),recorda(sex, head(S)).
+%------------------------------
+
+
+
+%------------------------------
+%Resultados de las preguntas
+%------------------------------
+
+%Cargar datos del usuario
+data_user:- new(Dialog, dialog('Ingreso de datos')),
+   %Etiqueta
+    new(Etiqueta, label(nombre, 'Ingrese sus datos: ')),
+
+    %Cajas de texto
+    new(Text1, text_item('Nombre: ')),
+    new(Text2, text_item('Edad: ')),
+    new(Text3, text_item('Sexo')),
+
+    %Botones
+    new(Siguiente, button('Siguiente', and(message(@prolog, remember_user,Text1?selection,Text2?selection,Text3?selection),
+                                           message(@prolog, p1),
+                                           message(Dialog, destroy)))),
+    new(Salir, button('Salir', message(Dialog, destroy))),
+
+    send(Dialog, append, Etiqueta),
+    send(Dialog, append, Text1),
+    send(Dialog, append, Text2),
+    send(Dialog, append, Text3),
+    send(Dialog, append, Siguiente),
+    send(Dialog, append, Salir),
+
+    send(Dialog, open, point(420, 220)).
+
+
+% resultados:- new(Dialog, dialog('Resultados del "Test"')),
+%              recorded(z,head(SumaR3)),
+%              (SumaR3 >= 3, SumaR3 =< 9 -> new(R1, label(nombre, 'Las respuestas son fiables')); SumaR3 < 3, SumaR3 > 9 -> new(R1, label(nombre, 'Las respuestas son fiables'))),
+%              
+%              %Debes de hacer los demas recorded y adherirlos
+%              
+%              send(Dialog, append, R1),
+%              
+%              send(Dialog, open).
+             
+
+resultados:- new(Dialog, dialog('Resultados del "Test"')),
+
+%Nombre del usuario---------------------------------------------
+             recorded(name, head(N)),
+             atom_concat('Resultados del usuario: ', N, Name),
+
+%Edad del usuario-----------------------------------------------
+             recorded(age, head(A)),
+             atom_concat('Edad de: ', A, Age),
+             
+%Sexo del usuario---..------------------------------------------
+             recorded(sex, head(S)),
+             atom_concat('Sexo: ', S, Sex),
+
+%Atencion alta--------------------------------------------------
              recorded(x, head(SumaR1)), T1 is SumaR1 * 6.6,
-             writeln('Porsentaje de atención alta: '), writeln(T1), write('%'),
+             atom_concat('Porsentaje de atención alta: ', T1, Ta1),
+             atom_concat(Ta1, '%', Tp1),                            %<--------------------- atención alta
+
+%Atencion oscilante---------------------------------------------
              recorded(y, head(SumaR2)),T2 is SumaR2 * 6.6,
-             writeln('Porsentaje de atención oscilante: '), writeln(T2), write('%'),
+             atom_concat('Porsentaje de atención oscilante: ', T2, Tb1),
+             atom_concat(Tb1, '%', Tp2),                            %<--------------------- atención oscilante
+             
+%Atencion baja--------------------------------------------------
              recorded(z, head(SumaR3)), T3 is SumaR3 * 6.6,
-             writeln('Porsentaje de atención baja: '), writeln(T3), write('%'),
-             recorded(cas, head(SumaCas)),
-             write('Atención Cas: '), writeln(SumaCas),
-             recorded(mat, head(SumaMat)),
-             write('Atención Mat: '), writeln(SumaMat),
-             recorded(cie, head(SumaCie)),
-             write('Atención Cie: '), writeln(SumaCie),
-             recorded(art, head(SumaArt)),
-             write('Atención Art: '), writeln(SumaArt),
-             recorded(fis, head(SumaEf)),
-             write('Atención Ef: '), writeln(SumaEf).
-%------------------------------
+             atom_concat('Porsentaje de atención baja: ', T3, Tc1),
+             atom_concat(Tc1, '%', Tp3),                            %<--------------------- atención baja
+             
+%Atencion Castellano--------------------------------------------------
+             recorded(cas, head(SumaCas)), T4 is SumaCas * 50,
+             atom_concat('Porsentaje de atención en castellano: ', T4, Td1),
+             atom_concat(Td1, '%', Tp4),                            %<--------------------- atención castellano
+
+%Atencion matemáticas--------------------------------------------------
+             recorded(mat, head(SumaMat)), T5 is SumaMat * 50,
+             atom_concat('Porsentaje de atención en matemáticas: ', T5, Te1),
+             atom_concat(Te1, '%', Tp5),                            %<--------------------- atención matemáticas
+             
+%Atencion Ciencias--------------------------------------------------
+             recorded(cie, head(SumaCie)), T6 is SumaCie * 50,
+             atom_concat('Porsentaje de atención en ciencias: ', T6, Tf1),
+             atom_concat(Tf1, '%', Tp6),                            %<--------------------- atención ciencias
+             
+%Atencion artes--------------------------------------------------
+             recorded(art, head(SumaArt)), T7 is SumaArt * 50,
+             atom_concat('Porsentaje de atención en artes: ', T7, Tg1),
+             atom_concat(Tg1, '%', Tp7),                            %<--------------------- atención artes
+             
+%Atencion fisica--------------------------------------------------
+             recorded(fis, head(SumaEf)), T8 is SumaEf * 50,
+             atom_concat('Porsentaje de atención en educación física: ', T8, Th1),
+             atom_concat(Th1, '%', Tp8),                            %<--------------------- atención fisica
+             
+             %Etiquetas
+             new(En, label(nombre, Name)),
+             new(Ea, label(nombre, Age)),
+             new(Es, label(nombre, Sex)),
+             
+             new(Eaa, label(nombre, Tp1)),
+             new(Eao, label(nombre, Tp2)),
+             new(Eab, label(nombre, Tp3)),
+             
+             new(ECas, label(nombre, Tp4)),
+             new(EMat, label(nombre, Tp5)),
+             new(ECie, label(nombre, Tp6)),
+             new(EArt, label(nombre, Tp7)),
+             new(EFis, label(nombre, Tp8)),
+             
+             %Botones
+             new(Salir, button('Ok', message(Dialog, destroy))),
+             
+             send(Dialog, append, En),
+             send(Dialog, append, Ea),
+             send(Dialog, append, Es),
+             
+             send(Dialog, append, Eaa),
+             send(Dialog, append, Eao),
+             send(Dialog, append, Eab),
+             
+             send(Dialog, append, ECas),
+             send(Dialog, append, EMat),
+             send(Dialog, append, ECie),
+             send(Dialog, append, EArt),
+             send(Dialog, append, EFis),
+             
+             send(Dialog, append, Salir),
+
+             send(Dialog, open, point(420, 220)).
+             
+             
+             
+%---------------------------------------------------------------------------------------
+%Vista principal de los resultados, que lo imprime en pantalla
+%---------------------------------------------------------------------------------------
+%              writeln('Resultados del usuario: '),recorded(name, head(N)), write(N),
+
+%              writeln('Edad de: '),recorded(age, head(A)), write(A),
+
+%              writeln('Sexualidad: '),recorded(sex, head(S)), write(S),
+
+%              recorded(x, head(SumaR1)), T1 is SumaR1 * 6.6,
+%              writeln('Porsentaje de atención alta: '), writeln(T1), write('%'),
+
+%              recorded(y, head(SumaR2)),T2 is SumaR2 * 6.6,
+%              writeln('Porsentaje de atención oscilante: '), writeln(T2), write('%'),
+
+%              recorded(z, head(SumaR3)), T3 is SumaR3 * 6.6,
+%              writeln('Porsentaje de atención baja: '), writeln(T3), write('%'),
+
+%              recorded(cas, head(SumaCas)),
+%              write('Atención Cas: '), writeln(SumaCas),
+
+%              recorded(mat, head(SumaMat)),
+%              write('Atención Mat: '), writeln(SumaMat),
+
+%              recorded(cie, head(SumaCie)),
+%              write('Atención Cie: '), writeln(SumaCie),
+
+%              recorded(art, head(SumaArt)),
+%              write('Atención Art: '), writeln(SumaArt),
+
+%              recorded(fis, head(SumaEf)),
+%              write('Atención Ef: '), writeln(SumaEf).
+%---------------------------------------------------------------------------------------
 
 
 %------------------------------

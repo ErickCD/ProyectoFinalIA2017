@@ -64,11 +64,39 @@ iaInicio:- new(Dialog, dialog('Proyecto final')),
    send(Dialog, append, new(Menu, menu_bar)),
    send(Menu, append, new(Iniciar, popup(iniciar))),
    send(Menu, append, new(Ayuda, popup(ayuda))),
+   
    send_list(Iniciar, append, [menu_item(iniciar, message(@prolog, data_user)),
+                               menu_item(informacion, message(@prolog, info)),
                                menu_item(salir, message(Dialog, destroy))]),
-   send_list(Ayuda, append, [menu_item(ayuda, message(@prolog, ayud))]),
+   send_list(Ayuda, append, [menu_item(autor, message(@display, inform, 'Erick Clair'))]),
+   
+   mostrar('F:/Documentos/ITSTA/7.-septimo_semestre/ITSTA-Inteligencia_Artificial/Prolog/ProyectofinalIA/img1.jpeg',Dialog,Menu),
    
    send(Dialog, open, point(400, 200)).
+   
+mostrar(V,D,M):- new(I, image(V)),
+        new(B, bitmap(I)),
+        new(F2, figure),
+        send(F2, display, B),
+        new(D1, device),
+        send(D1, display, F2),
+        send(D, display, D1),
+        send(D1,below(M)).
+
+info:-new(Dialog, dialog('Pregunta 1')),
+                  new(A, label(nombre, 'Codigo fuente en: https://github.com/ErickCD/ProyectoFinalIA2017/blob/master/main.pl')),
+                  new(B, label(nombre, 'Facultad de: Ingeniería en sistemas')),
+                  new(C, label(nombre, 'Institución: Instituto Tecnológico Superior de Tantoyuca')),
+                  
+                  new(Ok,button(ok,message(Dialog,destroy))),
+
+                  send(Dialog, append(A)),
+                  send(Dialog, append(B)),
+                  send(Dialog, append(C)),
+                  send(Dialog, append(Ok)),
+                  
+      send(Dialog,default_button,ok),
+      send(Dialog, open, point(420, 220)).
 
 
 
@@ -700,6 +728,17 @@ data_user:- new(Dialog, dialog('Ingreso de datos')),
 
     send(Dialog, open, point(420, 220)).
 
+
+% resultados:- new(Dialog, dialog('Resultados del "Test"')),
+%              recorded(z,head(SumaR3)),
+%              (SumaR3 >= 3, SumaR3 =< 9 -> new(R1, label(nombre, 'Las respuestas son fiables')); SumaR3 < 3, SumaR3 > 9 -> new(R1, label(nombre, 'Las respuestas son fiables'))),
+%              
+%              %Debes de hacer los demas recorded y adherirlos
+%              
+%              send(Dialog, append, R1),
+%              
+%              send(Dialog, open).
+             
 
 resultados:- new(Dialog, dialog('Resultados del "Test"')),
 
